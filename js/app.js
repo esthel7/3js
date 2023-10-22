@@ -19,20 +19,25 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 
 document.body.appendChild(renderer.domElement);
 
+// 빛
+const pointLight = new THREE.PointLight(0xffffff, 1); // 색, 세기
+pointLight.position.set(0, 2, 12); // x, y, z
+scene.add(pointLight);
+
 // 도형
 const geometry1 = new THREE.BoxGeometry(0.5, 0.5, 0.5); // 정육면체, x, y, z
-const meterial1 = new THREE.MeshStandardMaterial({ color: 0x999999 });
+const meterial1 = new THREE.MeshStandardMaterial({ color: 0x049ef4 });
 const obj1 = new THREE.Mesh(geometry1, meterial1);
 obj1.position.x = -1; // 좌측으로 1만큼 이동
 scene.add(obj1);
 
 const geometry2 = new THREE.ConeGeometry(0.4, 0.7, 6); // 각뿔, 반지름, 높이, n각뿔
-const meterial2 = new THREE.MeshStandardMaterial({ color: 0x999999 });
+const meterial2 = new THREE.MeshStandardMaterial({ color: 0x152441 });
 const obj2 = new THREE.Mesh(geometry2, meterial2);
 scene.add(obj2);
 
-const geometry3 = new THREE.IcosahedronGeometry(0.4, 0); // 정이십면체, 반지름, 각 개수(크면 원에 가까워짐)
-const meterial3 = new THREE.MeshStandardMaterial({ color: 0x999999 });
+const geometry3 = new THREE.TorusGeometry(0.3, 0.12, 16); // 도넛, 반지름, 도넛 두께, 둥근 정도
+const meterial3 = new THREE.MeshStandardMaterial({ color: 0xf4f2f5 });
 const obj3 = new THREE.Mesh(geometry3, meterial3);
 obj3.position.x = 1;
 scene.add(obj3);
