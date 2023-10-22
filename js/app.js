@@ -21,9 +21,41 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
 // 빛
+
+// pointLight ➡️ 전구
 const pointLight = new THREE.PointLight(0xffffff, 70); // 색, 세기
 pointLight.position.set(0, 10, 12); // x, y, z ➡️ 도형이 까맣게 나오면 위치(혹은 세기) 조절
+// const pointLightHepler = new THREE.PointLightHelper(pointLight, 3, 0x0000ff); // pointLight의 이동경로 및 위치 확인 가능
+// scene.add(pointLightHepler);
 scene.add(pointLight);
+
+// ambientLight ➡️ 모든 object 대상으로 전역에서 비춤, 그림자❌
+// const ambientLight = new THREE.AmbientLight(0xffffff, 0.1); // 모든 object 대상으로 전역에서 비춤, 그림자❌
+// scene.add(ambientLight);
+
+// directionalLight ➡️ 태양, 그림자 표현 가능
+// const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5); // 색, 세기
+// directionalLight.position.set(1, 1, 1);
+// const directionalLightHelper = new THREE.DirectionalLightHelper( // directionalLight의 이동경로 및 위치 확인 가능
+//   directionalLight, // 확인할 빛
+//   0.5,
+//   0x0000ff
+// );
+// scene.add(directionalLightHelper);
+// scene.add(directionalLight);
+
+// hemisphereLight ➡️ 하늘과 지상 사이의 물체가 그라데이션으로 표현
+// const hemisphereLight = new THREE.HemisphereLight(0x0000ff, 0xff0000, 1); // 하늘색, 지상색, 세기
+// scene.add(hemisphereLight);
+
+// rectAreaLight ➡️ 은은한 빛
+// const rectAreaLight = new THREE.RectAreaLight(0xffffff, 2, 1, 0.5); // 색, 넓이, 높이, 강도
+// rectAreaLight.position.set(0.5, 0.5, 1);
+// scene.add(rectAreaLight);
+
+// spotLight ➡️ 공연장 같은 빛
+// const spotLight = new THREE.SpotLight(0xffffff, 0.5); // 색, 세기
+// scene.add(spotLight);
 
 // 텍스쳐
 const textureLoader = new THREE.TextureLoader();
