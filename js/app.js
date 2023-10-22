@@ -17,6 +17,7 @@ camera.lookAt(new THREE.Vector3(0, 0, 0)); // 카메라가 (0, 0, 0) 바라보�
 // 렌더러
 const renderer = new THREE.WebGLRenderer({ antialias: true }); // 곡선 매끄럽게
 renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.shadowMap.enabled = true;
 
 document.body.appendChild(renderer.domElement);
 
@@ -27,6 +28,10 @@ const pointLight = new THREE.PointLight(0xffffff, 70); // 색, 세기
 pointLight.position.set(0, 10, 12); // x, y, z ➡️ 도형이 까맣게 나오면 위치(혹은 세기) 조절
 // const pointLightHepler = new THREE.PointLightHelper(pointLight, 3, 0x0000ff); // pointLight의 이동경로 및 위치 확인 가능
 // scene.add(pointLightHepler);
+pointLight.castShadow = true;
+pointLight.shadow.mapSize.width = 1024; // 선명한 그림자
+pointLight.shadow.mapSize.height = 1024;
+// pointLight.shadow.radius = 2; // 그림자 가장자리에 blur 처리
 scene.add(pointLight);
 
 // ambientLight ➡️ 모든 object 대상으로 전역에서 비춤, 그림자❌
@@ -48,7 +53,7 @@ scene.add(pointLight);
 // const hemisphereLight = new THREE.HemisphereLight(0x0000ff, 0xff0000, 1); // 하늘색, 지상색, 세기
 // scene.add(hemisphereLight);
 
-// rectAreaLight ➡️ 은은한 빛
+// rectAreaLight ➡️ 은은한 빛, 그림자❌
 // const rectAreaLight = new THREE.RectAreaLight(0xffffff, 2, 1, 0.5); // 색, 넓이, 높이, 강도
 // rectAreaLight.position.set(0.5, 0.5, 1);
 // scene.add(rectAreaLight);
@@ -77,6 +82,7 @@ const geometry1 = new THREE.BoxGeometry(0.5, 0.5, 0.5); // 정육면체, x, y, z
 const meterial1 = new THREE.MeshStandardMaterial({ map: textureBaseColor }); // map으로 텍스쳐 추가
 const obj1 = new THREE.Mesh(geometry1, meterial1);
 obj1.position.x = -2; // 좌측으로 2만큼 이동
+obj1.castShadow = true; // 그림자 만들 도형
 scene.add(obj1);
 
 const geometry2 = new THREE.ConeGeometry(0.4, 0.7, 6); // 각뿔, 반지름, 높이, n각뿔
@@ -86,9 +92,10 @@ const meterial2 = new THREE.MeshStandardMaterial({
 });
 const obj2 = new THREE.Mesh(geometry2, meterial2);
 obj2.position.x = -1;
+obj2.castShadow = true;
 scene.add(obj2);
 
-const geometry3 = new THREE.TorusGeometry(0.3, 0.12, 16); // 도넛, 반지름, 도넛 두께, 둥근 정도
+const geometry3 = new THREE.TorusGeometry(0.3, 0.1, 16); // 도넛, 반지름, 도넛 두께, 둥근 정도
 const meterial3 = new THREE.MeshStandardMaterial({
   map: textureBaseColor,
   normalMap: textureNormalMap,
@@ -96,12 +103,14 @@ const meterial3 = new THREE.MeshStandardMaterial({
   displacementScale: 0.15 // 높낮이 조절 (기본은 1)
 });
 const obj3 = new THREE.Mesh(geometry3, meterial3);
+obj3.castShadow = true;
 scene.add(obj3);
 
 const geometry4 = new THREE.IcosahedronGeometry(0.35, 0); // 정이십면체, 반지름, 각 개수(크면 원에 가까워짐)
 const meterial4 = new THREE.MeshStandardMaterial({ color: 0x1f7d5 });
 const obj4 = new THREE.Mesh(geometry4, meterial4);
 obj4.position.x = 1;
+obj4.castShadow = true;
 scene.add(obj4);
 
 const geometry5 = new THREE.SphereGeometry(0.3); // 구, 반지름
@@ -115,6 +124,7 @@ const meterial5 = new THREE.MeshStandardMaterial({
 });
 const obj5 = new THREE.Mesh(geometry5, meterial5);
 obj5.position.x = 2;
+obj5.castShadow = true;
 scene.add(obj5);
 
 // 바닥 추가
@@ -123,6 +133,7 @@ const planeMaterial = new THREE.MeshStandardMaterial({ color: 0xeeeeee });
 const plane = new THREE.Mesh(planeGeometry, planeMaterial);
 plane.rotation.x = -0.5 * Math.PI;
 plane.position.y = -0.5;
+plane.receiveShadow = true; // 그림자 나타내기
 scene.add(plane);
 
 const render = time => {
