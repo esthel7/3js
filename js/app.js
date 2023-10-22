@@ -1,4 +1,5 @@
 import * as THREE from '../node_modules/three/build/three.module.js';
+import { OrbitControls } from 'https://unpkg.com/three@0.126.1/examples/jsm/controls/OrbitControls.js';
 
 // 장면
 const scene = new THREE.Scene();
@@ -18,8 +19,14 @@ camera.lookAt(new THREE.Vector3(0, 0, 0)); // 카메라가 (0, 0, 0) 바라보�
 const renderer = new THREE.WebGLRenderer({ antialias: true }); // 곡선 매끄럽게
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.shadowMap.enabled = true;
-
 document.body.appendChild(renderer.domElement);
+
+// orbitControls ➡️ 카메라 세팅 이후에 설정
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.minDistance = 1; // 스크롤줌 최소값(default=0)
+controls.maxDistance = 6;
+controls.maxPolarAngle = Math.PI / 2; // 아래로 드래그 각도 제한
+controls.update(); // 카메라 위치 바꾼 후 써주기
 
 // 빛
 
@@ -152,6 +159,12 @@ const render = time => {
   requestAnimationFrame(render);
 };
 requestAnimationFrame(render);
+
+const animation = () => {
+  controls.update();
+  renderer.render(scene, camera);
+};
+animation(); // orbitControls 사용 위함
 
 // 반응형 ➡️ 첫 렌더링 후 사이즈 변경 시 적용
 const onWindowResize = () => {
