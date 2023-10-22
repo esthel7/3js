@@ -6,12 +6,13 @@ scene.background = new THREE.Color(0xf1e2f1);
 
 // 카메라
 const camera = new THREE.PerspectiveCamera(
-  75,
-  window.innerWidth / window.innerHeight,
-  0.1,
-  1000
+  75, // 시야각
+  window.innerWidth / window.innerHeight, // 종횡비
+  0.1, // 카메라 시점 시작
+  1000 // 카메라 시점 종료 ➡️ 카메라 시점 시작보다 작거나 시점 종료보다 큰 위치에 존재하면 카메라에 ❌
 );
 camera.position.z = 2; // 도형이 안나온다면 카메라 위치 조절해보기
+camera.lookAt(new THREE.Vector3(0, 0, 0)); // 카메라가 (0, 0, 0) 바라보도록
 
 // 렌더러
 const renderer = new THREE.WebGLRenderer({ antialias: true }); // 곡선 매끄럽게
@@ -83,6 +84,14 @@ const meterial5 = new THREE.MeshStandardMaterial({
 const obj5 = new THREE.Mesh(geometry5, meterial5);
 obj5.position.x = 2;
 scene.add(obj5);
+
+// 바닥 추가
+const planeGeometry = new THREE.PlaneGeometry(30, 30, 1, 1); // 넓이, 높이, 수평세그먼트, 수직세그먼트
+const planeMaterial = new THREE.MeshStandardMaterial({ color: 0xeeeeee });
+const plane = new THREE.Mesh(planeGeometry, planeMaterial);
+plane.rotation.x = -0.5 * Math.PI;
+plane.position.y = -0.5;
+scene.add(plane);
 
 const render = time => {
   time *= 0.001; // 초 단위로 바꾸기
