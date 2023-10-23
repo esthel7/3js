@@ -4,6 +4,8 @@ import { OrbitControls } from 'https://unpkg.com/three@0.126.1/examples/jsm/cont
 // 장면
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0xf1e2f1);
+scene.fog = new THREE.Fog(0x004fff, 2, 8); // 색상, 가까운 정도, 먼 정도
+scene.fog = new THREE.FogExp2(0x004fff, 0.2); // 색상, 밀도
 
 // 카메라
 const camera = new THREE.PerspectiveCamera(
