@@ -27,6 +27,10 @@
 
 ## [threejs 공식문서](https://threejs.org/)
 
+## [texture](https://3dtextures.me/2022/01/16/stone-path-008/)
+
+## [skyBox](https://opengameart.org/content/skiingpenguins-skybox-pack)
+
 ## [강의영상](https://www.youtube.com/watch?v=_PqQLvFa_Vw&list=PLkbzizJk4Ae9hHI_YUD3fRv8xLfS3jGEW&index=1)
 
 ## [Notion](https://sudden-mat-e7c.notion.site/three-js-ddec650cf22c406dbf1a6995c3a71a45?pvs=4)
