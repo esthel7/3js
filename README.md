@@ -34,7 +34,3 @@
 ## [강의영상](https://www.youtube.com/watch?v=_PqQLvFa_Vw&list=PLkbzizJk4Ae9hHI_YUD3fRv8xLfS3jGEW&index=1)
 
 ## [Notion](https://sudden-mat-e7c.notion.site/three-js-ddec650cf22c406dbf1a6995c3a71a45?pvs=4)
-
-<div align="center">
-  <img src="" width="800" >
-</div>
