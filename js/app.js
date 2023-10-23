@@ -6,6 +6,8 @@ const scene = new THREE.Scene();
 scene.background = new THREE.Color(0xffffff);
 // scene.fog = new THREE.Fog(0x004fff, 2, 8); // 색상, 가까운 정도, 먼 정도
 // scene.fog = new THREE.FogExp2(0x004fff, 0.2); // 색상, 밀도
+const axesHelper = new THREE.AxesHelper(15); // 현재 어느 각도에서 바라보고 있는지 가운데 표시해줌
+scene.add(axesHelper);
 
 // 카메라
 const camera = new THREE.PerspectiveCamera(
@@ -86,11 +88,50 @@ scene.add(ambientLight);
 // const textureRoughnessrMap = textureLoader.load(
 //   '../static/img/Stone_Path_008_roughness.jpg'
 // );
+const skyMaterialArray = [];
+const textureFt = new THREE.TextureLoader().load('../static/img/arid_ft.jpg'); // 순서 중요
+const textureBk = new THREE.TextureLoader().load('../static/img/arid_bk.jpg');
+const textureUp = new THREE.TextureLoader().load('../static/img/arid_up.jpg');
+const textureDn = new THREE.TextureLoader().load('../static/img/arid_dn.jpg');
+const textureRt = new THREE.TextureLoader().load('../static/img/arid_rt.jpg');
+const textureLf = new THREE.TextureLoader().load('../static/img/arid_lf.jpg');
+skyMaterialArray.push(
+  new THREE.MeshStandardMaterial({
+    map: textureFt
+  })
+);
+skyMaterialArray.push(
+  new THREE.MeshStandardMaterial({
+    map: textureBk
+  })
+);
+skyMaterialArray.push(
+  new THREE.MeshStandardMaterial({
+    map: textureUp
+  })
+);
+skyMaterialArray.push(
+  new THREE.MeshStandardMaterial({
+    map: textureDn
+  })
+);
+skyMaterialArray.push(
+  new THREE.MeshStandardMaterial({
+    map: textureRt
+  })
+);
+skyMaterialArray.push(
+  new THREE.MeshStandardMaterial({
+    map: textureLf
+  })
+);
+for (let i = 0; i < 6; i++) {
+  skyMaterialArray[i].side = THREE.BackSide; // 바깥이 아니라 안쪽에 texture 적용
+}
 
 // 도형
-const geometry1 = new THREE.BoxGeometry(24, 24, 24); // 정육면체, x, y, z
-const meterial1 = new THREE.MeshStandardMaterial({ color: 0x333333 });
-const obj1 = new THREE.Mesh(geometry1, meterial1);
+const geometry1 = new THREE.BoxGeometry(2400, 2400, 2400); // 정육면체, x, y, z
+const obj1 = new THREE.Mesh(geometry1, skyMaterialArray);
 scene.add(obj1);
 
 // const geometry2 = new THREE.ConeGeometry(0.4, 0.7, 6); // 각뿔, 반지름, 높이, n각뿔
