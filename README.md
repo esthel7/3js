@@ -4,3 +4,5 @@
 - OrthographicCamera ➡️ 원근법 무시
 
 ## [Sketchfab](https://sketchfab.com/)
+
+## [강의영상](https://www.youtube.com/watch?v=CojyGfCMvuU)
