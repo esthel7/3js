@@ -1,5 +1,7 @@
 import { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
+import { OrbitControls } from '@react-three/drei';
+import * as THREE from 'three';
 import { Mesh } from 'three';
 
 const Element3D = () => {
@@ -14,11 +16,17 @@ const Element3D = () => {
     <>
       <directionalLight position={[1, 1, 1]} />
 
-      <mesh ref={refMesh} rotation={[0, (45 * Math.PI) / 180, 0]}>
-        {/* y축으로 45도만큼 회전 */}
+      <axesHelper scale={10} />
+      <OrbitControls />
+
+      <mesh
+        ref={refMesh}
+        rotation={[0, THREE.MathUtils.degToRad(45), 0]} // y축으로 45도만큼 회전
+        scale={[2, 1, 1]} // x축으로 2베 키우기
+      >
         <boxGeometry />
-        {/* 정육면체 생성 */}
-        <meshStandardMaterial color="#e67e22" />
+        {/* 육면체 생성 */}
+        <meshStandardMaterial color="#e67e22" opacity={0.5} transparent />
       </mesh>
     </>
   );

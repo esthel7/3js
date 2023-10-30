@@ -1,5 +1,6 @@
 ## r3f
 
+- 🟰 `react three fiber`
 - `react`에서 `three.js`를 효과적으로 사용할 수 있도록 해주는 라이브러리
 
 ## cra with typescript
@@ -24,8 +25,7 @@ import { Element3D } from "./Element3D"; // 만든 파일
 const App = () => {
   return (
     <Canvas>
-      {" "}
-      ➡️ Canvas는 자식 필수
+      {" ➡️ Canvas는 자식 필수 "}
       <Element3D />
     </Canvas>
   );
@@ -34,7 +34,7 @@ const App = () => {
 
 ## ts에서 useRef 사용하기
 
-```jsx
+```js
 import { useRef } from "react";
 import { Mesh } from "three";
 
@@ -45,6 +45,24 @@ return <mesh ref={refMesh}></mesh>;
 ```
 
 [참고](https://driip.me/7126d5d5-1937-44a8-98ed-f9065a7c35b5)
+
+## 좌표계 및 회전방향
+
+- x 좌표 ➡️ 오른쪽으로 +
+- y 좌표 ➡️ 위쪽으로 +
+- z 좌표 ➡️ 사람 쪽으로 +
+- 회전방향 ➡️ 반시계방향 +
+
+## orbitControls
+
+- 마우스로 시점 변경 가능
+  `npm install @react-three/drei`
+
+```js
+import { OrbitControls } from "@react-three/drei";
+
+<OrvitControls />;
+```
 
 ## [강의영상](https://www.youtube.com/watch?v=Sg6OcVxe64k&list=PLe6NQuuFBu7HUeJkowKRkLWwkdOlhwrje)
 
