@@ -1,7 +1,13 @@
-import React from 'react';
+import { Canvas } from '@react-three/fiber';
+import { Element3D } from './Element3D';
+import './App.css';
 
 const App = () => {
-  return <div className="App"></div>;
+  return (
+    <Canvas>
+      <Element3D />
+    </Canvas>
+  );
 };
 
 export default App;
