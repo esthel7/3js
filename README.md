@@ -53,17 +53,6 @@ return <mesh ref={refMesh}></mesh>;
 - z 좌표 ➡️ 사람 쪽으로 +
 - 회전방향 ➡️ 반시계방향 +
 
-## orbitControls
-
-- 마우스로 시점 변경 가능
-  `npm install @react-three/drei`
-
-```js
-import { OrbitControls } from "@react-three/drei";
-
-<OrbitControls />;
-```
-
 ## [강의영상](https://www.youtube.com/watch?v=Sg6OcVxe64k&list=PLe6NQuuFBu7HUeJkowKRkLWwkdOlhwrje)
 
 ## [r3f Notion](https://sudden-mat-e7c.notion.site/r3f-0fbcc35657784780b2d3f3e25fa67d13?pvs=4)

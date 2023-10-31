@@ -1,6 +1,7 @@
 import { useRef, useEffect } from 'react';
 import { useFrame, MeshProps } from '@react-three/fiber';
 import { OrbitControls, Box } from '@react-three/drei';
+import { useControls } from 'leva';
 import * as THREE from 'three';
 import { Mesh } from 'three';
 
@@ -14,6 +15,17 @@ const Element3D = () => {
   const refMesh = useRef<Mesh>(null);
   const refWireMesh = useRef<Mesh>(null);
 
+  const { xSize, ySize, zSize, xSegments, ySegments, zSegments } = useControls({
+    // 마우스로 값 조정할 수 있도록 UI 제공
+    xSize: { value: 1, min: 0.1, max: 5, step: 0.01 },
+    // 초기값은 1, 마우스로 조정 단위는 0.01
+    ySize: { value: 1, min: 0.1, max: 5, step: 0.01 },
+    zSize: { value: 1, min: 0.1, max: 5, step: 0.01 },
+    xSegments: { value: 1, min: 1, max: 10, step: 1 },
+    ySegments: { value: 1, min: 1, max: 10, step: 1 },
+    zSegments: { value: 1, min: 1, max: 10, step: 1 }
+  });
+
   useFrame((state, delta) => {
     // delta ➡️ 이전, 현재 시간 차이(ms 단위)
     // 매 프레임이 렌더링되기 직전 실행
@@ -24,8 +36,8 @@ const Element3D = () => {
   useEffect(() => {
     if (refMesh.current && refWireMesh.current)
       refWireMesh.current.geometry = refMesh.current.geometry;
-    // refWireMesh에 <boxGeometry /> 생김
-  }, []);
+    // refWireMesh에 refMesh 아래의 <boxGeometry {...props} />와 똑같이 생김
+  }, [xSize, ySize, zSize, xSegments, ySegments, zSegments]);
 
   return (
     <>
@@ -41,7 +53,9 @@ const Element3D = () => {
         ref={refMesh}
         rotation={[0, THREE.MathUtils.degToRad(45), 0]} // y축으로 45도만큼 회전
       >
-        <boxGeometry />
+        <boxGeometry
+          args={[xSize, ySize, zSize, xSegments, ySegments, zSegments]}
+        />
         <meshStandardMaterial color="#e67e22" opacity={0.5} transparent />
       </mesh>
 
