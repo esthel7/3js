@@ -11,11 +11,12 @@ const MakeBox = (props: MeshProps) => {
 };
 
 const Element3D = () => {
-  const refMesh = useRef<Mesh>(null);
+  const meshRef = useRef<Mesh>(null);
+
   useFrame((state, delta) => {
     // delta ➡️ 이전, 현재 시간 차이(ms 단위)
     // 매 프레임이 렌더링되기 직전 실행
-    if (refMesh.current) refMesh.current.rotation.y += delta; // y축으로 회전
+    if (meshRef.current) meshRef.current.rotation.y += delta; // y축으로 회전
   });
 
   return (
@@ -29,7 +30,7 @@ const Element3D = () => {
 
       {/* mesh 이용 육면체 생성 */}
       <mesh
-        ref={refMesh}
+        ref={meshRef}
         rotation={[0, THREE.MathUtils.degToRad(45), 0]} // y축으로 45도만큼 회전
         scale={[2, 1, 1]} // x축으로 2베 키우기
       >
@@ -40,6 +41,11 @@ const Element3D = () => {
       {/* drei 이용 육면체 생성 */}
       <Box position={[2, 0, 0]}>
         <meshStandardMaterial color="#1abc9c" />
+      </Box>
+
+      <Box position={[2, 0, 0]}>
+        <meshStandardMaterial emissive="#1abc9c" wireframe />
+        {/* emissive ➡️ 광원 영향 없이 자체 발광 */}
       </Box>
 
       {/* three.js 기본 방식 */}
