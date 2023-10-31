@@ -16,6 +16,8 @@ const Element3D = () => {
   const refWireMeshBox = useRef<Mesh>(null);
   const refMeshSphere = useRef<Mesh>(null);
   const refWireMeshSphere = useRef<Mesh>(null);
+  const refMeshCylinder = useRef<Mesh>(null);
+  const refWireMeshCylinder = useRef<Mesh>(null);
 
   const { xSize, ySize, zSize, xSegments, ySegments, zSegments } = useControls({
     // 마우스로 값 조정할 수 있도록 UI 제공
@@ -52,6 +54,32 @@ const Element3D = () => {
     // 구의 수직 길이 ➡️ 잘려서 표현
   });
 
+  const {
+    topRadius,
+    bottomRadius,
+    length,
+    radialSegments,
+    lengthSegments,
+    bOpen,
+    thetaStartCylinder,
+    phiLengthCylinder
+  } = useControls({
+    topRadius: { value: 1, min: 0.1, max: 5, step: 0.01 },
+    // 기둥 윗부분 반지름
+    bottomRadius: { value: 1, min: 0.1, max: 5, step: 0.01 },
+    length: { value: 1, min: 0.1, max: 5, step: 0.01 },
+    radialSegments: { value: 32, min: 3, max: 256, step: 1 },
+    // 수평분할 ➡️ 최소 3(삼각형이 최소)
+    lengthSegments: { value: 1, min: 1, max: 256, step: 1 },
+    // 수직분할
+    bOpen: { value: false },
+    // 윗면 아랫면 개방 여부
+    thetaStartCylinder: { value: 0, min: 0, max: 360, step: 0.01 },
+    // 원의 수직 시작 위치 ➡️ 잘린 원의 시작 위치 조절
+    phiLengthCylinder: { value: 360, min: 0, max: 360, step: 0.01 }
+    // 원주 길이
+  });
+
   useFrame((state, delta) => {
     // delta ➡️ 이전, 현재 시간 차이(ms 단위)
     // 매 프레임이 렌더링되기 직전 실행
@@ -78,6 +106,20 @@ const Element3D = () => {
     thetaLength
   ]);
 
+  useEffect(() => {
+    if (refMeshCylinder.current && refWireMeshCylinder.current)
+      refWireMeshCylinder.current.geometry = refMeshCylinder.current.geometry;
+  }, [
+    topRadius,
+    bottomRadius,
+    length,
+    radialSegments,
+    lengthSegments,
+    bOpen,
+    thetaStartCylinder,
+    phiLengthCylinder
+  ]);
+
   return (
     <>
       <ambientLight intensity={0.6} />
@@ -98,7 +140,6 @@ const Element3D = () => {
         />
         <meshStandardMaterial color="#e67e22" opacity={0.5} transparent />
       </mesh>
-
       <mesh
         ref={refWireMeshBox}
         rotation={[0, THREE.MathUtils.degToRad(45), 0]}
@@ -121,9 +162,27 @@ const Element3D = () => {
         />
         <meshStandardMaterial color="#d5c105" opacity={0.5} transparent />
       </mesh>
-
       <mesh ref={refWireMeshSphere} position={[0, 0, 3]}>
         <meshStandardMaterial emissive="#d5c105" wireframe />
+      </mesh>
+
+      <mesh ref={refMeshCylinder} position={[4, 0, 0]}>
+        <cylinderGeometry
+          args={[
+            topRadius,
+            bottomRadius,
+            length,
+            radialSegments,
+            lengthSegments,
+            bOpen,
+            (thetaStartCylinder * Math.PI) / 180,
+            (phiLengthCylinder * Math.PI) / 180
+          ]}
+        />
+        <meshStandardMaterial color="#75d1d5" opacity={0.5} transparent />
+      </mesh>
+      <mesh ref={refWireMeshCylinder} position={[4, 0, 0]}>
+        <meshStandardMaterial emissive="#75d1d5" wireframe />
       </mesh>
 
       {/* drei 이용 육면체 생성 */}
