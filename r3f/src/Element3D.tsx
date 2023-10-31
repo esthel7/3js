@@ -1,8 +1,14 @@
 import { useRef } from 'react';
-import { useFrame } from '@react-three/fiber';
-import { OrbitControls } from '@react-three/drei';
+import { useFrame, MeshProps } from '@react-three/fiber';
+import { OrbitControls, Box } from '@react-three/drei';
 import * as THREE from 'three';
 import { Mesh } from 'three';
+
+const MakeBox = (props: MeshProps) => {
+  // MeshProps import from fiber
+  const geom = new THREE.BoxGeometry();
+  return <mesh {...props} geometry={geom}></mesh>;
+};
 
 const Element3D = () => {
   const refMesh = useRef<Mesh>(null);
@@ -14,20 +20,32 @@ const Element3D = () => {
 
   return (
     <>
-      <directionalLight position={[1, 1, 1]} />
+      <ambientLight intensity={0.6} />
+      <directionalLight position={[2, 1, 3]} intensity={0.8} />
+      {/* 도형 색이 흐리다면 조명 세기 높이기 */}
 
       <axesHelper scale={10} />
       <OrbitControls />
 
+      {/* mesh 이용 육면체 생성 */}
       <mesh
         ref={refMesh}
         rotation={[0, THREE.MathUtils.degToRad(45), 0]} // y축으로 45도만큼 회전
         scale={[2, 1, 1]} // x축으로 2베 키우기
       >
         <boxGeometry />
-        {/* 육면체 생성 */}
         <meshStandardMaterial color="#e67e22" opacity={0.5} transparent />
       </mesh>
+
+      {/* drei 이용 육면체 생성 */}
+      <Box position={[2, 0, 0]}>
+        <meshStandardMaterial color="#1abc9c" />
+      </Box>
+
+      {/* three.js 기본 방식 */}
+      <MakeBox position={[0, 2, 0]}>
+        <meshStandardMaterial color="#8e44ad" />
+      </MakeBox>
     </>
   );
 };

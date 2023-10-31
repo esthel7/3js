@@ -61,7 +61,7 @@ return <mesh ref={refMesh}></mesh>;
 ```js
 import { OrbitControls } from "@react-three/drei";
 
-<OrvitControls />;
+<OrbitControls />;
 ```
 
 ## [강의영상](https://www.youtube.com/watch?v=Sg6OcVxe64k&list=PLe6NQuuFBu7HUeJkowKRkLWwkdOlhwrje)
