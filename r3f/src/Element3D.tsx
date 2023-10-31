@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import { useFrame, MeshProps } from '@react-three/fiber';
 import { OrbitControls, Box } from '@react-three/drei';
 import * as THREE from 'three';
@@ -11,13 +11,21 @@ const MakeBox = (props: MeshProps) => {
 };
 
 const Element3D = () => {
-  const meshRef = useRef<Mesh>(null);
+  const refMesh = useRef<Mesh>(null);
+  const refWireMesh = useRef<Mesh>(null);
 
   useFrame((state, delta) => {
     // delta ➡️ 이전, 현재 시간 차이(ms 단위)
     // 매 프레임이 렌더링되기 직전 실행
-    if (meshRef.current) meshRef.current.rotation.y += delta; // y축으로 회전
+    if (refMesh.current) refMesh.current.rotation.y += delta; // y축으로 회전
+    if (refWireMesh.current) refWireMesh.current.rotation.y += delta;
   });
+
+  useEffect(() => {
+    if (refMesh.current && refWireMesh.current)
+      refWireMesh.current.geometry = refMesh.current.geometry;
+    // refWireMesh에 <boxGeometry /> 생김
+  }, []);
 
   return (
     <>
@@ -30,22 +38,22 @@ const Element3D = () => {
 
       {/* mesh 이용 육면체 생성 */}
       <mesh
-        ref={meshRef}
+        ref={refMesh}
         rotation={[0, THREE.MathUtils.degToRad(45), 0]} // y축으로 45도만큼 회전
-        scale={[2, 1, 1]} // x축으로 2베 키우기
       >
         <boxGeometry />
         <meshStandardMaterial color="#e67e22" opacity={0.5} transparent />
       </mesh>
 
-      {/* drei 이용 육면체 생성 */}
-      <Box position={[2, 0, 0]}>
-        <meshStandardMaterial color="#1abc9c" />
-      </Box>
-
-      <Box position={[2, 0, 0]}>
-        <meshStandardMaterial emissive="#1abc9c" wireframe />
+      <mesh ref={refWireMesh} rotation={[0, THREE.MathUtils.degToRad(45), 0]}>
+        <meshStandardMaterial emissive="#e67e22" wireframe />
         {/* emissive ➡️ 광원 영향 없이 자체 발광 */}
+      </mesh>
+
+      {/* drei 이용 육면체 생성 */}
+      <Box position={[2, 0, 0]} scale={[1, 2, 1]}>
+        {/* y축으로 2배 키우기 */}
+        <meshStandardMaterial color="#1abc9c" />
       </Box>
 
       {/* three.js 기본 방식 */}
