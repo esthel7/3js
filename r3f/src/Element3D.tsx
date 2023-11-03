@@ -1,6 +1,6 @@
 import { useRef, useEffect } from 'react';
 import { useFrame, MeshProps } from '@react-three/fiber';
-import { OrbitControls, Box } from '@react-three/drei';
+import { OrbitControls, Environment, Box } from '@react-three/drei';
 import { useControls } from 'leva';
 import * as THREE from 'three';
 import { Mesh } from 'three';
@@ -137,10 +137,13 @@ const Element3D = () => {
 
   return (
     <>
-      <ambientLight intensity={1} />
+      {/* <ambientLight intensity={1} />
       <directionalLight position={[2, 1, 3]} intensity={1} />
-      <directionalLight position={[2, 5, 3]} intensity={1} />
+      <directionalLight position={[2, 5, 3]} intensity={1} /> */}
       {/* 도형 색이 흐리다면 조명 세기 높이기 */}
+
+      {/* Environment는 drie에서 제공하는 광원 ➡️ HDRIs파일 🟰 그림이 빛 역할 */}
+      <Environment background files={require('./assets/partly_cloudy.hdr')} />
 
       <axesHelper scale={10} />
       <OrbitControls />
