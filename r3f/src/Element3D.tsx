@@ -1,9 +1,16 @@
 import { useRef, useEffect } from 'react';
 import { useFrame, MeshProps, useThree } from '@react-three/fiber';
-import { OrbitControls, Environment, Box } from '@react-three/drei';
+import {
+  OrbitControls,
+  Environment,
+  Box,
+  useGLTF,
+  useAnimations
+} from '@react-three/drei';
 import { useControls } from 'leva';
 import * as THREE from 'three';
 import { Mesh } from 'three';
+import { ModelProps } from './utils/utils';
 
 const MakeBox = (props: MeshProps) => {
   // MeshProps import from fiber
@@ -20,6 +27,30 @@ const Element3D = () => {
   const refWireMeshCylinder = useRef<Mesh>(null);
   const refMesh = useRef<Mesh>(null);
   const refMeshClone = useRef<Mesh>(null);
+
+  const Model: React.FC<ModelProps> = ({ url }) => {
+    const model = useGLTF(url); // require 직접 쓰기❌ ➡️ react단에서 /static/..으로 파일위치 조정
+
+    const animations = useAnimations(model.animations, model.scene);
+    const { actionName } = useControls({
+      actionName: {
+        value: animations.names[1],
+        options: animations.names
+      }
+    });
+
+    useEffect(() => {
+      const action = animations.actions[actionName] as THREE.AnimationAction;
+      action.reset().fadeIn(0.5).play(); // reset 안하면 action이 겹침
+      // fadeIn으로 새로운 action이 0.5초에 걸쳐 추가됨
+
+      return () => {
+        action.fadeOut(0.5); // fadeOut으로 이전 action이 서서히 사라지도록 ➡️ 애니메이션 겹치지 않게
+      };
+    }, [animations.actions, actionName]);
+
+    return <primitive object={model.scene} scale={3} position={[3, -2, 3]} />;
+  };
 
   const { camera } = useThree();
   useControls({
@@ -158,6 +189,9 @@ const Element3D = () => {
 
       <axesHelper scale={10} />
       <OrbitControls />
+
+      {/* glTF */}
+      <Model url={require('./assets/model.glb')} />
 
       {/* mesh 이용 육면체 생성 */}
       <mesh
