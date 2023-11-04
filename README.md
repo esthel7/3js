@@ -14,6 +14,9 @@
 
 `npm i three @types/three @react-three/fiber`
 
+- 소스맵 경고창 안뜨도록 `.env`에 추가
+  `GENERATE_SOURCEMAP = false`
+
 ## three 사용하기
 
 - `App.tsx`에서 `@react-three/fiber` 불러오기
