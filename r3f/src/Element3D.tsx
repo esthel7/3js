@@ -210,6 +210,7 @@ const Element3D = () => {
       >
         <meshStandardMaterial emissive="#e67e22" wireframe />
         {/* emissive ➡️ 광원 영향 없이 자체 발광 */}
+        {/* emissive 색 보정 필요할 경우 toneMapped={false} 추가 */}
       </mesh>
 
       <mesh ref={refMeshSphere} position={[0, 0, 3]}>

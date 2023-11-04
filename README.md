@@ -18,7 +18,7 @@
 
 - `App.tsx`에서 `@react-three/fiber` 불러오기
 
-```js
+```ts
 import { Canvas } from "@react-three/fiber";
 import { Element3D } from "./Element3D"; // 만든 파일
 
