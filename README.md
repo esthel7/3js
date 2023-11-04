@@ -34,11 +34,10 @@ const App = () => {
 
 ## ts에서 useRef 사용하기
 
-```js
+```ts
 import { useRef } from "react";
 import { Mesh } from "three";
 
-// prettier-ignore
 const refMesh = useRef<Mesh>(null);
 
 return <mesh ref={refMesh}></mesh>;

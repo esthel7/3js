@@ -1,5 +1,5 @@
 import { useRef, useEffect } from 'react';
-import { useFrame, MeshProps } from '@react-three/fiber';
+import { useFrame, MeshProps, useThree } from '@react-three/fiber';
 import { OrbitControls, Environment, Box } from '@react-three/drei';
 import { useControls } from 'leva';
 import * as THREE from 'three';
@@ -20,6 +20,17 @@ const Element3D = () => {
   const refWireMeshCylinder = useRef<Mesh>(null);
   const refMesh = useRef<Mesh>(null);
   const refMeshClone = useRef<Mesh>(null);
+
+  const { camera } = useThree();
+  useControls({
+    positionZ: {
+      value: 0,
+      min: -10,
+      max: 10,
+      step: 0.1,
+      onChange: v => (camera.position.z = v) // 카메라 z위치 조절
+    }
+  });
 
   const { xSize, ySize, zSize, xSegments, ySegments, zSegments } = useControls({
     // 마우스로 값 조정할 수 있도록 UI 제공
